@@ -1,4 +1,4 @@
-# animal
+# Fauna 
 
 A new Flutter project.
 
