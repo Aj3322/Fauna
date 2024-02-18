@@ -1,5 +1,6 @@
 import 'package:animal/app/Controllers/home_controller.dart';
 import 'package:animal/app/Screen/Detail.dart';
+import 'package:animal/app/Widget/DrawerWidget.dart';
 import 'package:animal/config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,27 +8,21 @@ import '../../Model/Pet.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
-  static RxBool isDetail = false.obs;
-  static int indexOfPet = 0;
-
   @override
   Widget build(BuildContext context) {
     Config().init(context);
     var width = Config.screenWidth;
     var height = Config.screenHeight;
     List<Pet> dataList = controller.PetData;
-    return WillPopScope(
-      onWillPop: () async {
-        if (HomePage.isDetail.value) {
-          HomePage.isDetail.value = false;
-          HomePage.isDetail.refresh();
-          return false; // Prevent default behavior (pop the route)
-        }
-        return true; // Allow default behavior (pop the route)
-      },
-      child: Obx(() => isDetail.value
-          ? DetailActivity(dataList[indexOfPet])
-          : Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "MarketPlace",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w400),
+        ) ,
+      ),
+      body: Container(
               margin: EdgeInsets.symmetric(horizontal: width! * 0.04)
                   .copyWith(top: height! * 0.04),
               height: height,
@@ -41,18 +36,13 @@ class HomePage extends GetView<HomeController> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "MarketPlace",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Icon(Icons.search, size: 25, color: Colors.black38),
                             SizedBox(width: 5),
-                            Icon(Icons.bookmark,
-                                size: 25, color: Colors.black38),
+                            // Icon(Icons.bookmark,
+                            //     size: 25, color: Colors.black38),
                           ],
                         ),
                       ],
@@ -84,9 +74,7 @@ class HomePage extends GetView<HomeController> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      indexOfPet = index;
-                                      isDetail.value = true;
-                                      isDetail.refresh();
+                                      Get.to(DetailActivity(dataList[index]),transition: Transition.zoom);
                                     },
                                     child: Container(
                                       height: height * 0.26,
@@ -123,7 +111,7 @@ class HomePage extends GetView<HomeController> {
                   ),
                 ],
               ),
-            )),
+            ),
     );
   }
 }

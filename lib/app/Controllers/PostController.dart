@@ -69,8 +69,7 @@ class PostController extends GetxController {
       await firestore.collection('posts').doc(postId).set(post.toJson());
       posting.value=false;
       posting.refresh();
-     FeedScreen.isPostAdd.value=false;
-     FeedScreen.isPostAdd.refresh();
+     Get.back();
      getAllPostsSortedByDate();
      captionController.clear();
      images.clear();

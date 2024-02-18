@@ -30,68 +30,55 @@ class SplashScreen extends GetView<SharedPrefController> {
 
     return  Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: Config.screenHeight,
           width: Config.screenWidth,
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Use Image.asset to display an image from assets
-              Center(
-                child: CircleGradientAvatar(
-                  imageUrl: 'assets/img.png',
-                  radius: 50,
-                ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Animals Help',
-                style: TextStyle(fontSize: 24),
-              ),
-            ],
+          child: Center(
+            child: Image.asset('assets/logo.png',height: 50,
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-class CircleGradientAvatar extends StatelessWidget {
-  final String imageUrl;
-  final double radius;
-
-  const CircleGradientAvatar({
-    required this.imageUrl,
-    required this.radius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: RadialGradient(
-          colors: [
-            Colors.orange.shade900,
-            Colors.orange.shade800,
-            Colors.orange.shade400,
-          ],
-          stops: [0.0, 0.3, 1.0], // Adjust the stops to match the colors
-        ),
-      ),
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: radius,
-        child: ClipOval(
-          child: Image.asset(
-            imageUrl,
-            width: radius * 2,
-            height: radius * 2,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
+//
+// class CircleGradientAvatar extends StatelessWidget {
+//   final String imageUrl;
+//   final double radius;
+//
+//   const CircleGradientAvatar({
+//     required this.imageUrl,
+//     required this.radius,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         shape: BoxShape.circle,
+//         gradient: RadialGradient(
+//           colors: [
+//             Colors.orange.shade900,
+//             Colors.orange.shade800,
+//             Colors.orange.shade400,
+//           ],
+//           stops: [0.0, 0.3, 1.0], // Adjust the stops to match the colors
+//         ),
+//       ),
+//       child: CircleAvatar(
+//         backgroundColor: Colors.transparent,
+//         radius: radius,
+//         child: ClipOval(
+//           child: Image.asset(
+//             imageUrl,
+//             width: radius * 2,
+//             height: radius * 2,
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//

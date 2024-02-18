@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controllers/ProfileController.dart';
+import '../../../Controllers/ProfileController.dart';
 
 class ProfileEditPage extends GetView<ProfileController> {
   @override
@@ -37,7 +37,7 @@ class ProfileEditPage extends GetView<ProfileController> {
 
              ),),
               const SizedBox(height: 16),
-              _buildTextField('Edit your Name', controller.name),
+              _buildTextField(controller.users.value.name, controller.name),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {

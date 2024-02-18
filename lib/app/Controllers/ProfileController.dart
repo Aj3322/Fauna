@@ -175,7 +175,6 @@ class ProfileController extends GetxController {
     // try {
       final DocumentSnapshot<Map<String, dynamic>> snapshot =
           await user.doc(uid).get() as DocumentSnapshot<Map<String, dynamic>>;
-
       Map<String, dynamic>? userData = snapshot.data();
       if (userData != null) {
         Users fetchedUser = Users.fromMap(userData);
@@ -189,6 +188,12 @@ class ProfileController extends GetxController {
   }
 
   Future<void> editProfile() async {
+    // Upload profile image if it's selected
+    if (profileImage != null) {
+      final String imagePath = 'users/$uid/profile_image.jpg';
+      await uploadImage(profileImage!, imagePath);
+      profileUrl.value = await getDownloadUrl('users/$uid/profile_image.jpg');
+    }
     print(profileUrl.value);
     Users usersUpated = Users(
         image: profileUrl.value,
@@ -200,20 +205,13 @@ class ProfileController extends GetxController {
         lastActive: "",
         email: users.value.email,
         pushToken: '',
-        pets: pets,
-        petDescription: petDes
+        pets: users.value.pets,
+        petDescription: users.value.petDescription
     );
 
-    await user.doc(uid).update(usersUpated.toJson());
-
-    // Upload profile image if it's selected
-    if (profileImage != null) {
-      final String imagePath = 'users/$uid/profile_image.jpg';
-      await uploadImage(profileImage!, imagePath);
-      profileUrl.value = await getDownloadUrl('users/$uid/profile_image.jpg');
-    }
-    // Refresh pet data after editing
-    update();
+    var result = await user.doc(uid).update(usersUpated.toJson());
+    fetchUserData(uid);
+    users.refresh();
     Get.back();
   }
 

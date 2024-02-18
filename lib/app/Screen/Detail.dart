@@ -2,6 +2,7 @@ import 'package:animal/app/Controllers/home_controller.dart';
 import 'package:animal/app/Model/Pet.dart';
 import 'package:animal/app/Screen/ChatScreen.dart';
 import 'package:animal/app/Screen/Pages/HomePage.dart';
+import 'package:animal/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,6 @@ class DetailActivity extends GetView<HomeController> {
   const DetailActivity(this.pet, {super.key});
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -22,7 +22,7 @@ class DetailActivity extends GetView<HomeController> {
             Stack(
               children: [
                 Container(
-                  width: 332,
+                  width: double.infinity ,
                   height: 221,
                   decoration: ShapeDecoration(
                     image: DecorationImage(
@@ -42,10 +42,7 @@ class DetailActivity extends GetView<HomeController> {
                     radius: 23,
                     backgroundColor: Colors.white,
                     child: IconButton(
-                      onPressed:(){
-                        HomePage.isDetail.value=false;
-                        HomePage.isDetail.refresh();
-                      },
+                      onPressed:()=>Get.back(),
                       icon: const Icon(Icons.arrow_back_ios_new, size: 27, color: Colors.black  ),
                     ),
                   ),
@@ -55,8 +52,8 @@ class DetailActivity extends GetView<HomeController> {
             ),
 
             Text(pet.name, style: _textStyle(18, FontWeight.w400)),
-            Text('₹ 20,000', style: _textStyle(19.42, FontWeight.w700)),
-            _descriptionText('Description', 'lorem ipsum  lorem ipsumlorem ipsumlorem ipsumlorem '),
+            Text('₹ ${pet.prize}', style: _textStyle(19.42, FontWeight.w700)),
+            _descriptionText('Description', pet.description),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,7 +63,7 @@ class DetailActivity extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Sold By',style:_textStyle(12, FontWeight.w400,color: Colors.blue)),
-                    Text('Ean Dog House', style: _textStyle(12, FontWeight.w400)),
+                    Text(pet.name, style: _textStyle(12, FontWeight.w400)),
                   ],
                 ),
                 SizedBox( width: 100,child: OutlinedButton(onPressed: (){}, child: const Text("View") ))

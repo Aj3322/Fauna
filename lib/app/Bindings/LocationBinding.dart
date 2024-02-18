@@ -1,7 +1,7 @@
 import 'package:animal/app/Controllers/LocationController.dart';
 import 'package:get/get.dart';
 
-class ProfileBinding extends Bindings{
+class LocationBinding extends Bindings{
   @override
   void dependencies() {
     // TODO: implement dependencies

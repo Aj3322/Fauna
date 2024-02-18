@@ -10,6 +10,10 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const SELLPRODUCT = _Paths.SELLPRODUCT;
   static const DETAILACTIVITY = _Paths.DETAILACTIVITY;
+  static const LOCATION = _Paths.LOCATION;
+  static const EDITPROFILE = _Paths.EDITPROFILE;
+  static const ADOPTION = _Paths.ADOPTION;
+  static const MARKETPLACE = _Paths.MARKETPLACE;
 }
 
 abstract class _Paths {
@@ -19,6 +23,11 @@ abstract class _Paths {
   static const SIGNUP = '/signup';
   static const SPLASH = '/splash';
   static const PROFILE = '/profile';
+  static const EDITPROFILE = '/edit-profile';
   static const SELLPRODUCT = '/sell-product';
   static const DETAILACTIVITY = '/detail-activity';
+  static const LOCATION = '/location';
+  static const ADOPTION = '/adoption';
+  static const MARKETPLACE = '/marketplace';
+
 }

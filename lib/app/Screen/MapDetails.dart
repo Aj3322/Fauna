@@ -14,13 +14,6 @@ class MapDetails extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          onPressed:(){
-            LocationPage.isDetail.value=false;
-            LocationPage.isDetail.refresh();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black38),
-        ),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -75,15 +68,15 @@ class MapDetails extends GetView<HomeController> {
             _TextRow(Icons.add_business_outlined,  "Unknown"),
             _TextRow(Icons.call, "Unknown"),
 
-            SizedBox(width: MediaQuery.of(context).size.width*0.9,child: ElevatedButton(
-              onPressed: (){},
-              child: const Text("Book a Appointment"),
-            ),),
+            // SizedBox(width: MediaQuery.of(context).size.width*0.9,child: ElevatedButton(
+            //   onPressed: (){},
+            //   child: const Text("Book a Appointment"),
+            // ),),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Reviews' , style: _textStyle(15, FontWeight.w600,color: Colors.black)),
-                OutlinedButton(onPressed: (){}, child: const Text("Write Review")),
+                // OutlinedButton(onPressed: (){}, child: const Text("Write Review")),
               ],
             ),
 

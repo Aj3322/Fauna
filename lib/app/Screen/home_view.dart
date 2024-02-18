@@ -1,16 +1,14 @@
-import 'package:animal/app/Bindings/ProfileBinding.dart';
 import 'package:animal/app/Controllers/AdoptController.dart';
-import 'package:animal/app/Controllers/LocationController.dart';
 import 'package:animal/app/Controllers/PostController.dart';
 import 'package:animal/app/Controllers/ProfileController.dart';
 import 'package:animal/app/Screen/Pages/Adopted/AdoptedPages.dart';
-import 'package:animal/app/Screen/Pages/AssistancePage.dart';
 import 'package:animal/app/Screen/Pages/HomePage.dart';
 import 'package:animal/app/Screen/Pages/LocationPage.dart';
 import 'package:animal/app/Screen/Pages/PostPages/PostPage.dart';
-import 'package:animal/app/Screen/Pages/ProfilePage.dart';
+import 'package:animal/app/Screen/Pages/ProfilePages/ProfilePage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetView {
@@ -75,13 +73,13 @@ class HomeView extends GetView {
             () => BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, color: Colors.blue),
-              activeIcon: Icon(Icons.home, color: Colors.red),
+              icon: FaIcon(FontAwesomeIcons.home, color: Colors.blue ),
+              activeIcon: FaIcon(FontAwesomeIcons.home, color: Colors.red),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.location_city_outlined, color: Colors.blue),
-              activeIcon: Icon(Icons.location_city, color: Colors.red),
+              icon: FaIcon(FontAwesomeIcons.hospital, color: Colors.blue),
+              activeIcon: FaIcon(FontAwesomeIcons.hospital, color: Colors.red),
               label: '',
             ),
             BottomNavigationBarItem(
@@ -90,13 +88,12 @@ class HomeView extends GetView {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shop_two_outlined, color: Colors.blue),
-              activeIcon: Icon(Icons.shop_two_rounded, color: Colors.red),
+              icon: FaIcon(FontAwesomeIcons.shop, color: Colors.blue),
+              activeIcon: FaIcon(FontAwesomeIcons.shop, color: Colors.red),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline, color: Colors.blue),
-              activeIcon: Icon(Icons.person, color: Colors.red),
+              icon: CircleAvatar(backgroundColor: Colors.blue ,radius: 17,),
               label: '',
             ),
           ],

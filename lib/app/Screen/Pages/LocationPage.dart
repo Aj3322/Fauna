@@ -12,8 +12,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../Model/MapData.dart';
 class LocationPage extends GetView<LocationController> {
   LocationPage({super.key});
-  static RxBool isDetail = false.obs;
-  static int indexOfPet = 0;
   String googleApikey = "AIzaSyC1stPRMsTLwlxp9fP0vf0byrWjOUm7VbQ";
   LatLng startLocation = const LatLng(30.378180, 76.776695);
   RxString location = "Search Location".obs;
@@ -26,194 +24,178 @@ class LocationPage extends GetView<LocationController> {
     var width = Config.screenWidth;
     var height = Config.screenHeight;
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (LocationPage.isDetail.value) {
-          LocationPage.isDetail.value = false;
-          LocationPage.isDetail.refresh();
-          return false; // Prevent default behavior (pop the route)
-        }
-        return true; // Allow default behavior (pop the route)
-      },
-      child: Obx(
-            () => isDetail.value
-            ? MapDetails(controller.mapData[indexOfPet])
-            : Scaffold(
-          appBar: AppBar(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const Text(
-                  "Location",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 23,
-                    fontWeight: FontWeight.w400,
-                  ),
+    return  Scaffold(
+        appBar: AppBar(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const Text(
+                "Location",
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 23,
+                  fontWeight: FontWeight.w400,
                 ),
-                Text(location.value=="Search Location"?
-                  controller.currentAddress.value:location.value,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontFamily: "Poppins",
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                  ),
+              ),
+              Text(location.value=="Search Location"?
+                controller.currentAddress.value:location.value,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontFamily: "Poppins",
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
                 ),
-              ],
-            ),
-            actions: [
-              IconButton(
-                onPressed: () async {
-                  showLocationPopup(context);
-                },
-                icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black, size: 25),
               ),
             ],
           ),
-          body: Container(
-            margin: EdgeInsets.only(top: height !* 0.02),
-            height: height,
-            width: width,
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: height * 0.3,
-                    width: double.infinity,
-                    clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.all(15).copyWith(top: 0),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                    child: Obx(
-                          () => controller.isLoadingLoc.value
-                          ? const Center(child: CircularProgressIndicator())
-                          : GoogleMap(
-                        onMapCreated: (GoogleMapController controller) {
-                         controller=mapcontroller;
-                        },
-                            zoomGesturesEnabled: true,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(controller.lat.value, controller.log.value),
-                          zoom: 10,
-                        ),
-                        markers: _createMarkers(controller.mapData),
-                      ),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                showLocationPopup(context);
+              },
+              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black, size: 25),
+            ),
+          ],
+        ),
+        body: Container(
+          margin: EdgeInsets.only(top: height !* 0.02),
+          height: height,
+          width: width,
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: height * 0.3,
+                  width: double.infinity,
+                  clipBehavior: Clip.hardEdge,
+                  margin: const EdgeInsets.all(15).copyWith(top: 0),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
                   ),
-                  Container(
-                    height: height * 0.05,
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Filter Searches"),
-                        IconButton(
-                          onPressed: null,
-                          icon: Icon(
-                            Icons.filter_alt,
-                            size: 25,
-                            color: Colors.black26,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Obx(
-                        () => controller.isLoadingLoc.value && controller.isLoading.value
+                  child: Obx(
+                        () => controller.isLoadingLoc.value
                         ? const Center(child: CircularProgressIndicator())
-                        : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.mapData.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            indexOfPet = index;
-                            isDetail.value = true;
-                            isDetail.refresh();
-                          },
-                          child: Container(
-                            height: height * 0.11,
-                            margin: const EdgeInsets.symmetric(horizontal: 25),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller.mapData[index].name!,
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            children: [
-                                              RatingBar.builder(
-                                                initialRating: controller.mapData[index].rating ?? 0.0,
-                                                minRating: 0,
-                                                direction: Axis.horizontal,
-                                                allowHalfRating: true,
-                                                itemCount: 5,
-                                                itemSize: 12.0,
-                                                itemBuilder: (context, _) => const Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                ),
-                                                onRatingUpdate: (rating) {
-                                                  // Handle rating update if needed
-                                                },
-                                              ),
-                                              const SizedBox(width: 30,),
-                                              controller.mapData[index].userRatingsTotal == null
-                                                  ? Container()
-                                                  : Text("${controller.mapData[index].userRatingsTotal} Reviews", style: TextStyle(fontSize: 11),),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 2,),
-                                          Text(getStatus(controller.mapData[index])),
-                                        ],
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 15,
-                                    ),
-                                  ],
-                                ),
-                                const Divider(
-                                  color: Colors.black12,
-                                  thickness: 2,
-                                )
-                              ],
-                            ),
-                          ),
-                        );
+                        : GoogleMap(
+                      onMapCreated: (GoogleMapController controller) {
+                       controller=mapcontroller;
                       },
+                          zoomGesturesEnabled: true,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(controller.lat.value, controller.log.value),
+                        zoom: 10,
+                      ),
+                      markers: _createMarkers(controller.mapData),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                Container(
+                  height: height * 0.05,
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Filter Searches"),
+                      IconButton(
+                        onPressed: null,
+                        icon: Icon(
+                          Icons.filter_alt,
+                          size: 25,
+                          color: Colors.black26,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Obx(
+                      () => controller.isLoadingLoc.value && controller.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.mapData.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                         Get.to(MapDetails(controller.mapData[index]),transition: Transition.zoom);
+                        },
+                        child: Container(
+                          height: height * 0.11,
+                          margin: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller.mapData[index].name!,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Row(
+                                          children: [
+                                            RatingBar.builder(
+                                              initialRating: controller.mapData[index].rating ?? 0.0,
+                                              minRating: 0,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 12.0,
+                                              itemBuilder: (context, _) => const Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                // Handle rating update if needed
+                                              },
+                                            ),
+                                            const SizedBox(width: 30,),
+                                            controller.mapData[index].userRatingsTotal == null
+                                                ? Container()
+                                                : Text("${controller.mapData[index].userRatingsTotal} Reviews", style: TextStyle(fontSize: 11),),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 2,),
+                                        Text(getStatus(controller.mapData[index])),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15,
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.black12,
+                                thickness: 2,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
             ),
           ),
         ),
-      ),
     );
   }
 

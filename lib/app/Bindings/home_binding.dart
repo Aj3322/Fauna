@@ -1,4 +1,6 @@
 import 'package:animal/app/Controllers/LocationController.dart';
+import 'package:animal/app/Controllers/PostController.dart';
+import 'package:animal/app/Controllers/ProfileController.dart';
 import 'package:get/get.dart';
 import '../Controllers/ChatController.dart';
 import '../Controllers/SharedPrifrence.dart';
@@ -10,12 +12,12 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
+    Get.lazyPut<ProfileController>(
+            ()=> ProfileController());
     Get.lazyPut<SharedPrefController>(
             ()=> SharedPrefController());
-    Get.lazyPut<LocationController>(
-            ()=> LocationController());
-    Get.lazyPut<ChatController>(
-            ()=> ChatController());
+    Get.lazyPut<PostController>(
+            ()=> PostController());
   }
 }
 

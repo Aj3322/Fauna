@@ -8,6 +8,19 @@ class DonatePage extends GetView<AdoptedController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:const Flexible(
+          child:Text(
+            'Create a new Post',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              height: 0,
+            ),
+          ),
+        ) ,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: SingleChildScrollView(
@@ -15,29 +28,6 @@ class DonatePage extends GetView<AdoptedController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 16),
-             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(onPressed: () {
-                  // FeedScreen.isPostAdd.value=false;
-                  // FeedScreen.isPostAdd.refresh();
-                }, icon: Icon(Icons.arrow_back_ios)),
-                const Flexible(
-                  child:Text(
-                    'Create a new post for Adoption forum',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-              const SizedBox(height: 16),
               buildTextField('Name', controller.nameController),
               buildTextField('Description', controller.descriptionController),
               buildTextField('Breed', controller.breedController),

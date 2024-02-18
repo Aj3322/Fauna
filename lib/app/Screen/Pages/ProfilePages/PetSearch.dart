@@ -1,15 +1,15 @@
 import 'package:animal/app/Controllers/ProfileController.dart';
 import 'package:animal/app/Model/PetDiscription.dart';
-import 'package:animal/app/Screen/Pages/ProfilePage.dart';
 import 'package:animal/app/Screen/Pages/ProfilePages/DiscptionPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../config.dart';
-import '../../../Model/Pet.dart';
-class PetSearch extends GetView<ProfileController> {
-  const PetSearch({super.key});
+import '../../../Widget/Colors.dart';
 
+class PetSearch extends GetView<ProfileController> {
+   PetSearch({super.key});
+  RxList<PetDescription> filteredList = <PetDescription>[].obs;
   @override
   Widget build(BuildContext context) {
     Config().init(context);
@@ -17,24 +17,21 @@ class PetSearch extends GetView<ProfileController> {
     final height = Config.screenHeight;
     print("petSearch ${controller.petDescription.length}");
     List<PetDescription> dataList = controller.petDescription;
-    RxList<PetDescription> filteredList = <PetDescription>[].obs;
+    // RxList<PetDescription> filteredList = <PetDescription>[].obs;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(onPressed: (){ProfilePage().isOpen.value=0;ProfilePage().isOpen.refresh();}, icon: const Icon(Icons.arrow_back_ios_new)),
+            IconButton(
+                onPressed: () {
+                 Get.back();
+                },
+                icon: const Icon(Icons.arrow_back_ios_new)),
             MaterialButton(
-              onPressed: () async {
-                int  result = await controller.pickImage(source: ImageSource.gallery);
-                if (result != null) {
-                 filteredList.assign(controller.petDescription[result]);
-                 print(controller.petDescription[result].species);
-                }
-              },
-
+              onPressed: () =>_showBottomSheetImage(context),
               height: height! * 0.05,
               color: const Color(0xFF777B9F),
               shape: RoundedRectangleBorder(
@@ -55,15 +52,17 @@ class PetSearch extends GetView<ProfileController> {
                 controller: controller.text,
                 onChanged: (query) {
                   filteredList.assignAll(controller.petDescription
-                      .where((pet) =>
-                      pet.species!.toLowerCase().contains(query.toLowerCase()))
+                      .where((pet) => pet.species!
+                          .toLowerCase()
+                          .contains(query.toLowerCase()))
                       .toList());
                   print("FiltterList ${filteredList.length}");
                 },
-                onTap:(){
+                onTap: () {
                   filteredList.assignAll(controller.petDescription
-                      .where((pet) =>
-                      pet.species!.toLowerCase().contains(controller.text.text.toLowerCase()))
+                      .where((pet) => pet.species!
+                          .toLowerCase()
+                          .contains(controller.text.text.toLowerCase()))
                       .toList());
                 },
                 decoration: InputDecoration(
@@ -100,7 +99,11 @@ class PetSearch extends GetView<ProfileController> {
                         PetDescription pet = filteredList[index];
                         // print("${pet.image} $pet");
                         return InkWell(
-                          onTap: ()=>showBottomSheet(context: context, builder: (context) => DescriptionPage(context,pet,true),),
+                          onTap: () => showBottomSheet(
+                            context: context,
+                            builder: (context) =>
+                                DescriptionPage(context, pet, true),
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -132,5 +135,73 @@ class PetSearch extends GetView<ProfileController> {
         ),
       ),
     );
+  }
+
+  void _showBottomSheetImage(BuildContext context) {
+    var mq = MediaQuery.of(context).size;
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        backgroundColor: mobileBackgroundColor,
+        builder: (_) {
+          return ListView(
+            shrinkWrap: true,
+            padding:
+                EdgeInsets.only(top: mq.height * .03, bottom: mq.height * .05),
+            children: [
+              //pick profile picture label
+              const Text('Pick A Image ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500)),
+
+              //for adding some space
+              SizedBox(height: mq.height * .02),
+
+              //buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  //pick from gallery button
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fixedSize: Size(mq.width * .3, mq.height * .15)),
+                      onPressed: () async {
+                        int result =
+                        await controller.pickImage(source: ImageSource.gallery);
+                        if (result != null) {
+                          filteredList.assign(controller.petDescription[result]);
+                          print(controller.petDescription[result].species);
+                        }
+                      },
+                      child: Image.asset('assets/Aj2.png')),
+
+                  //take picture from camera button
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: const CircleBorder(),
+                          fixedSize: Size(mq.width * .3, mq.height * .15)),
+                      onPressed: () async {
+                        int result = await controller.pickImage(
+                            source: ImageSource.camera);
+                        if (result != null) {
+                          filteredList.assign(controller.petDescription[result]);
+                          print(controller.petDescription[result].species);
+                          Get.back();
+                        }
+                      },
+                      child: Image.asset('assets/Aj.png')),
+                ],
+              )
+            ],
+          );
+        });
   }
 }

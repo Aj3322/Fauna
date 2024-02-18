@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../Model/User.dart';
+import '../Screen/ChatDetails.dart';
+
 class AdoptedController extends GetxController with StateMixin<String> {
   late TextEditingController nameController;
   late TextEditingController breedController;
@@ -51,7 +54,15 @@ class AdoptedController extends GetxController with StateMixin<String> {
   void addToFavorites() {
     print('Pet added to favorites!');
   }
-  
+  Future<Users> fetchUserData(String uid) async {
+    print("hii");
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+    await  FirebaseFirestore.instance.collection("users").doc(uid).get();
+    Map<String, dynamic>? userData = snapshot.data();
+    // Get.to(ChatScreenDetail(user: Users.fromMap(userData!)));
+      return  Users.fromMap(userData!);
+    }
+
   Future<List<Pet>> getAllAdoptAnimal() async {
     try {
       // Query the entire 'pets' collection

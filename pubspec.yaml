@@ -58,6 +58,7 @@ dependencies:
   uuid: ^4.2.2
   firebase_ml_model_downloader: ^0.2.4+8
   flutter_tflite: ^1.0.1
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:

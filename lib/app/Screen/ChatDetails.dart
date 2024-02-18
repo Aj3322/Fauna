@@ -53,8 +53,7 @@ class ChatScreenDetail extends GetView<ChatController> {
                     size: 35,
                   ),
                   onPressed: () {
-                    ChatScreen().isChat.value=false;
-                    ChatScreen().isChat.refresh();
+                   Get.back();
                   }),
               leadingWidth: 20,
             ),

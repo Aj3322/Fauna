@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
-import '../ProfilePage.dart';
+import 'ProfilePage.dart';
 
 class DescriptionPage extends GetView<ProfileController> {
   BuildContext context1;
@@ -24,7 +24,7 @@ class DescriptionPage extends GetView<ProfileController> {
               child: Image.network(petDescription.image!,fit: BoxFit.cover,),
             ),
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
