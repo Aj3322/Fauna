@@ -21,12 +21,14 @@ Fauna connects pet owners with a wide range of services and resources, making pe
   # App Ui
 
 
-<img src="https://github.com/Aj3322/Fauna/assets/114848454/4952fb74-254a-4d3b-a982-afbdbc25a320" height="500" width="200">
-<img src="https://github.com/Aj3322/Fauna/assets/114848454/ed5e4576-cf37-482f-94c0-b6f0bfc1cbc5" height="500" width="200">
-<img src="https://github.com/Aj3322/Fauna/assets/114848454/51d11094-28bc-490a-8ac7-299a99e2fc23" height="500" width="200">
+<img src="https://github.com/Aj3322/Fauna/assets/114848454/caabe26a-2269-4312-b2a0-91bc9c9b830e" height="500" width="200">
 <img src="https://github.com/Aj3322/Fauna/assets/114848454/2898263f-81ca-479a-902a-e0d59992ccb2" height="500" width="200">
 <img src="https://github.com/Aj3322/Fauna/assets/114848454/a78ac0c0-c64f-4e8a-8573-34a1e22347ab" height="500" width="200">
 <img src="https://github.com/Aj3322/Fauna/assets/114848454/67911f39-bfb5-4cad-8863-ce5827bf49eb" height="500" width="200">
+<img src="https://github.com/Aj3322/Fauna/assets/114848454/4952fb74-254a-4d3b-a982-afbdbc25a320" height="500" width="200">
+<img src="https://github.com/Aj3322/Fauna/assets/114848454/ed5e4576-cf37-482f-94c0-b6f0bfc1cbc5" height="500" width="200">
+<img src="https://github.com/Aj3322/Fauna/assets/114848454/51d11094-28bc-490a-8ac7-299a99e2fc23" height="500" width="200">
+
 
 
 ## Getting Started
